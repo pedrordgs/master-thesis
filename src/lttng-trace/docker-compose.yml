@@ -1,0 +1,21 @@
+version: "3.3"
+services:
+  lttng_test:
+    build: .
+    tty: true
+    volumes:
+      - /lib/modules:/lib/modules
+      - /usr/src:/usr/src
+      - /sys/kernel/debug/:/sys/kernel/debug/
+      - /tmp/lttng-traces/:/tmp/lttng-traces/
+    cap_add:
+      - ALL
+    privileged: true
+    network_mode: host
+    pid: host
+    environment:
+      - LTTNG_SESSION_NAME=sample-session
+      - LTTNG_SYSCALLS=read;write;open;close;stat;fstat;lstat;lseek;pread64;pwrite64;readv;writev;socket;connect;accept;sendto;recvfrom;sendmsg;recvmsg;bind;listen;socketpair;setsockopt;getsockopt;fsync;fdatasync;truncate;ftruncate;rename;creat;unlink;readlink;mknod;fstatfs;readahead;setxattr;lsetxattr;fsetxattr;getxattr;lgetxattr;fgetxattr;listxattr;llistxattr;flistxattr;removexattr;lremovexattr;fremovexattr;openat;mknodat;newfstatat;unlinkat;renameat;readlinkat;accept4;renameat2
+      - LTTNG_TRACEPOINTS=
+      - LTTNG_EXTRA_CONTEXT=pid;tid;hostname;procname;ppid
+    command: ls

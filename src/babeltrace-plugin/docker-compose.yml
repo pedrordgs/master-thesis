@@ -1,0 +1,17 @@
+version: "3.3"
+services:
+  babeltrace:
+    build: .
+    network_mode: host
+    volumes:
+      - /tmp/lttng-traces/:/tmp/lttng-traces/
+    environment:
+      - LTTNG_ADDRESS=127.0.0.1
+      - ES_ADDRESSES=http://127.0.0.1:31111
+      - ES_USER=dio
+      - ES_PWD=diopw
+      - ES_INDEX_NAME=dio_trace
+      - ELK_ENABLED=False
+      - BABELTRACE_DUMMY=False
+      - LTTNG_LIVE=False
+      - BABELTRACE_DISCARD=False

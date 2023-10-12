@@ -1,0 +1,45 @@
+version: "3.3"
+services:
+  lttng_rocksdb:
+    build: .
+    tty: true
+    volumes:
+      - /lib/modules:/lib/modules
+      - /usr/src:/usr/src
+      - /sys/kernel/debug/:/sys/kernel/debug/
+      - /tmp/lttng-traces/:/tmp/lttng-traces/
+      - ./myrocksdb_data/kvstore:/rocksdb/test/kvstore
+      - ./myrocksdb_data/results:/rocksdb/test/results
+    cap_add:
+      - ALL
+    privileged: true
+    network_mode: host
+    pid: host
+    environment:
+      - LTTNG_SESSION_NAME=sample-session
+      - LTTNG_SYSCALLS=open;openat;creat;read;pread;readv;write;pwrite;close
+      - LTTNG_TRACEPOINTS=
+      - LTTNG_EXTRA_CONTEXT=pid;tid;hostname;procname;ppid
+      - LTTNG_LIVE=True
+      - LTTNG_DEFAULT=False
+      - POST_TRACE_ANALYSIS=False
+      - ROCKSDB_LOAD=100000000
+      - DB_BENCH_OPS=100000000
+    command: load
+
+  babeltrace:
+    image: pedrordgs/babeltrace:latest
+    tty: true
+    network_mode: host
+    volumes:
+      - /tmp/lttng-traces/:/tmp/lttng-traces/
+    environment:
+      - LTTNG_ADDRESS=127.0.0.1
+      - ES_ADDRESSES=http://127.0.0.1:31111
+      - ES_USER=dio
+      - ES_PWD=diopw
+      - ES_INDEX_NAME=dio_trace
+      - ELK_ENABLED=False
+      - BABELTRACE_DUMMY=False
+      - LTTNG_LIVE=True
+      - BABELTRACE_DISCARD=True

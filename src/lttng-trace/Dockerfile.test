@@ -1,0 +1,6 @@
+FROM pedrordgs/lttng:latest
+
+RUN useradd -U dtest
+COPY docker/start.sh /tmp/start.sh
+
+ENTRYPOINT [ "/usr/share/lttng-tracer/entrypoint.sh", "/tmp/start.sh" ]
