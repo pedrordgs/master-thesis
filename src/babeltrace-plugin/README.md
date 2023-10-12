@@ -26,11 +26,11 @@ docker run -it --name parser --net=host -e ES_ADDRESSES=<elasticsearch-address> 
 
 ## Contributing
 
-We welcome contributions to improve this plugin and its documentation. Feel free to submit issues and pull requests on our [GitHub repository]().
+We welcome contributions to improve this plugin and its documentation. Feel free to submit issues and pull requests on our [GitHub repository](https://github.com/pedrordgs/master-thesis/).
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE]() file for details.
+This project is licensed under the MIT License - see the [LICENSE](../../LICENSE) file for details.
 
 ---
 
